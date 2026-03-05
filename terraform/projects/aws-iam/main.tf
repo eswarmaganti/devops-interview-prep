@@ -86,3 +86,17 @@ resource "aws_iam_role_policy_attachment" "rol_policy_attachment" {
   policy_arn = aws_iam_policy.policy.arn
 }
 
+
+# Creating multiple users using count meta-argument
+resource "aws_iam_user" "users" {
+  count = length(var.iam_users)
+  name  = var.iam_users[count.index]
+  path  = "/users/"
+}
+
+# creating users using for_each meta-argument
+resource "aws_iam_user" "users2" {
+  for_each = toset(var.iam_users)
+  name     = "${each.value}-${each.key}"
+  path     = "/users/"
+}
