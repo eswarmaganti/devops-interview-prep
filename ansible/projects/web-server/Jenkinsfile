@@ -9,12 +9,14 @@ pipeline{
   }
 
   parameters {
-  choice (
-    name: 'Environment',
-    choices: ['dev', 'stage', 'prod'],
-    description: 'Target Environment'
-  )
-  environment{
+    choice (
+      name: 'Environment',
+      choices: ['dev', 'stage', 'prod'],
+      description: 'Target Environment'
+    )
+  }
+
+  environment {
     VENV = "${WORKSPACE}/venv"
     ANSIBLE_HOST_KEY_CHECKING = "False"
     PROJECT_DIR = "ansible/projects/web-server"
