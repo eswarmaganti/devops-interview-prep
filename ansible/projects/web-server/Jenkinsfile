@@ -23,7 +23,7 @@ pipeline{
   }
 
   stages{
-    stage("Checkout"){
+    stage("Git Checkout"){
       steps{
         git branch: "main",
         url: "https://github.com/eswarmaganti/devops-interview-prep.git"
@@ -48,7 +48,7 @@ pipeline{
         '''
       }
     }
-    stage("YAML Lint"){
+    stage("YAML Lint Check"){
       steps {
         sh '''
         source "$VENV/bin/activate"
@@ -57,12 +57,35 @@ pipeline{
         '''
       }
     }
-    stage("Ansible Link"){
+    
+    stage("Ansible Lint Check"){
       steps {
         sh '''
           source "$VENV/bin/activate"
           cd "${WORKSPACE}/${PROJECT_DIR}"
           ansible-lint
+        '''
+      }
+    }
+  
+    stage("Ansible Syntax Check"){
+      steps{
+        sh '''
+          source "$VENV/bin/activate"
+          ansible-playbook "${WORKSPACE}/${PROJECT_DIR}/playbook.yaml" \
+          -i "${WORKSPACE}/${PROJECT_DIR}/inventory/${Environment}.yaml" \
+          --syntax-check
+        '''
+      }
+    }
+
+    stage('Dry Run') {
+      steps {
+        sh '''
+          source "$VENV/bin/activate"
+          ansible-playbook "${WORKSPACE}/${PROJECT_DIR}/playbook.yaml" \
+          -i "${WORKSPACE}/${PROJECT_DIR}/inventory/${Environment}.yaml" \
+          --check --diff
         '''
       }
     }
