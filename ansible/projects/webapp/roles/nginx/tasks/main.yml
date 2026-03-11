@@ -1,0 +1,30 @@
+---
+
+- name: Install the NGINX Web Server
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: true
+  with_items: "{{ packages }}"
+
+- name: Enable and start the NGINX service
+  ansible.builtin.service:
+    name: "{{service}}"
+    state: "started"
+    enabled: true
+
+- name: Create SSL direction
+  ansible.builtin.file:
+    path: /etc/nginx/ssl
+    state: directory
+
+- name: Generate the SSL Cert and key
+  ansible.builtin.command: openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/ubuntulab.key -out /etc/nginx/ssl/ubuntulab.crt -subj "/CN=localhost"
+
+- name: Copy the nginx config file
+  ansible.builtin.template:
+    src: nginx_config.j2
+    dest: /etc/nginx/nginx.conf
+    mode: '0644'
+  notify: 
+    - Reload Nginx

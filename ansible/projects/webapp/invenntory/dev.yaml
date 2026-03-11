@@ -1,0 +1,11 @@
+all:
+  vars:
+    ansible_user: ansible
+    ansible_ssh_private_key_file: /Users/eswarmaganti/Developer/Projects/Vagrant/ubuntulab/vagrantkey
+    ansible_become: true
+    ansible_become_method: sudo
+  children:
+    lab:
+      hosts:
+        ansiblevagrantlab01:
+          ansible_host: 192.168.58.101
