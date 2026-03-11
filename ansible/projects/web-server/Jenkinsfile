@@ -33,7 +33,7 @@ pipeline{
       steps{
         sh '''
         python3 -m venv $VENV
-        source $VENV/bin/activate
+        source "$VENV/bin/activate"
         pip install --upgrade pip
         pip install ansible ansible-lint yamllint
 
@@ -43,7 +43,7 @@ pipeline{
     stage("Install Ansible Galaxy Roles"){
       steps{
         sh '''
-        source $VENV/bin/activate
+        source "$VENV/bin/activate"
         ansible-galaxy install -r "${WORKSPACE}/${PROJECT_DIR}/requirements.yaml" || true
         '''
       }
@@ -51,7 +51,7 @@ pipeline{
     stage("YAML Lint"){
       steps {
         sh '''
-        source $VENV/bin/activate
+        source "$VENV/bin/activate"
         cd "${WORKSPACE}/${PROJECT_DIR}"
         yamllint .
         '''
@@ -60,7 +60,7 @@ pipeline{
     stage("Ansible Link"){
       steps {
         sh '''
-          source $VENV/bin/activate
+          source "$VENV/bin/activate"
           cd "${WORKSPACE}/${PROJECT_DIR}"
           ansible-lint
         '''
