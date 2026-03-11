@@ -1,5 +1,4 @@
 ---
-
 - name: Install the NGINX Web Server
   ansible.builtin.apt:
     name: "{{ item }}"
@@ -28,4 +27,3 @@
     mode: '0644'
   notify: 
     - Reload Nginx
-    
