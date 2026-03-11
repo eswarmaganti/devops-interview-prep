@@ -19,8 +19,8 @@
 
 - name: Generate the SSL Cert and key
   ansible.builtin.command: >
-    openssl req -x509 -nodes -days 365 
-    -newkey rsa:2048 -keyout /etc/nginx/ssl/ubuntulab.key 
+    openssl req -x509 -nodes -days 365
+    -newkey rsa:2048 -keyout /etc/nginx/ssl/ubuntulab.key
     -out /etc/nginx/ssl/ubuntulab.crt -subj "/CN=localhost"
 
 - name: Copy the nginx config file
