@@ -9,12 +9,11 @@ pipeline{
   }
 
   parameters {
-    choice {
-      name: 'Environment',
-      choices: ['dev', 'stage', 'prod'],
-      description: 'Target Environment'
-    }
-  }
+  choice (
+    name: 'Environment',
+    choices: ['dev', 'stage', 'prod'],
+    description: 'Target Environment'
+  )
   environment{
     VENV = "${WORKSPACE}/venv"
     ANSIBLE_HOST_KEY_CHECKING = "False"
