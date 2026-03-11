@@ -1,0 +1,7 @@
+---
+- name: Playbook to configure the NGINX Web Server
+  hosts: all
+  gather_facts: false
+  become: true
+  roles:
+    - nginx
