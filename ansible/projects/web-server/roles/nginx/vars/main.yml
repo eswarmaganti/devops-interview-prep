@@ -1,8 +1,10 @@
 ---
-packages:
+nginx_packages:
   - nginx
   - python3
   - python3-pip
   - openssl
-service: nginx
-domain: ubuntulab
+nginx_service: nginx
+nginx_domain: ubuntulab
+nginx_ssl_cert: /etc/nginx/ssl/ubuntulab.crt 
+nginx_ssl_key: /etc/nginx/ssl/ubuntulab.key

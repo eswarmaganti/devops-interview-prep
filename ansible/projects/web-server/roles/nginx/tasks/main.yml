@@ -4,11 +4,11 @@
     name: "{{ item }}"
     state: present
     update_cache: true
-  with_items: "{{ packages }}"
+  with_items: "{{ nginx_packages }}"
 
 - name: Enable and start the NGINX service
   ansible.builtin.service:
-    name: "{{service}}"
+    name: "{{ nginx_service }}"
     state: "started"
     enabled: true
 
@@ -16,12 +16,15 @@
   ansible.builtin.file:
     path: /etc/nginx/ssl
     state: directory
+    mode: '1644'
 
 - name: Generate the SSL Cert and key
   ansible.builtin.command: >
     openssl req -x509 -nodes -days 365
-    -newkey rsa:2048 -keyout /etc/nginx/ssl/ubuntulab.key
-    -out /etc/nginx/ssl/ubuntulab.crt -subj "/CN=localhost"
+    -newkey rsa:2048 -keyout "{{ nginx_ssl_key }}"
+    -out "{{ nginx_ssl_key }}" -subj "/CN=localhost"
+  args:
+    creates: "{{ nginx_ssl_key }}"
 
 - name: Copy the nginx config file
   ansible.builtin.template:
