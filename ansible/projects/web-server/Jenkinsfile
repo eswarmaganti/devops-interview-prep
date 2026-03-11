@@ -57,7 +57,7 @@ pipeline{
         '''
       }
     }
-    
+
     stage("Ansible Lint Check"){
       steps {
         sh '''
@@ -81,12 +81,14 @@ pipeline{
 
     stage('Dry Run') {
       steps {
-        sh '''
-          source "$VENV/bin/activate"
-          ansible-playbook "${WORKSPACE}/${PROJECT_DIR}/playbook.yaml" \
-          -i "${WORKSPACE}/${PROJECT_DIR}/inventory/${Environment}.yaml" \
-          --check --diff
-        '''
+        sshagent(credentials: ['vagrant-ssh-key']){
+          sh '''
+            source "$VENV/bin/activate"
+            ansible-playbook "${WORKSPACE}/${PROJECT_DIR}/playbook.yaml" \
+            -i "${WORKSPACE}/${PROJECT_DIR}/inventory/${Environment}.yaml" \
+            --check --diff
+          '''
+          }
       }
     }
   }
