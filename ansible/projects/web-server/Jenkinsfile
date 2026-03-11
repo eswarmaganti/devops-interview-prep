@@ -10,9 +10,9 @@ pipeline{
 
   parameters {
     choice {
-      name: "Environment",
-      choices: ['dev', 'stage', 'prod']
-      description: "Target Environment"
+      name: 'Environment',
+      choices: ['dev', 'stage', 'prod'],
+      description: 'Target Environment'
     }
   }
   environment{
