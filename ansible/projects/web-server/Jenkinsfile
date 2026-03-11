@@ -91,5 +91,26 @@ pipeline{
           }
       }
     }
+
+    stage('Deploy') {
+      steps {
+        sshagent(credentials:['vagrant-ssh-key']){
+          sh '''
+            source "$VENV/bin/activate"
+            ansible-playbook "${WORKSPACE}/${PROJECT_DIR}/playbook.yaml" \
+            -i "${WORKSPACE}/${PROJECT_DIR}/inventory/${Environment}.yaml"
+          '''
+        }
+      }
+    }
+  }
+  
+  post {
+    success {
+      echo "Success: Successfully Deployed the Ansible playbook"
+    }
+    failure {
+      echo "Failed: Runtime error occurred, Failed to deploy the Ansible Playbook"
+    }
   }
 }
