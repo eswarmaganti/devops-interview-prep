@@ -6,5 +6,5 @@ nginx_packages:
   - openssl
 nginx_service: nginx
 nginx_domain: ubuntulab
-nginx_ssl_cert: /etc/nginx/ssl/ubuntulab.crt 
+nginx_ssl_cert: /etc/nginx/ssl/ubuntulab.crt
 nginx_ssl_key: /etc/nginx/ssl/ubuntulab.key
