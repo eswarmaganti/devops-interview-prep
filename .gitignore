@@ -1,3 +1,4 @@
 .vscode
 terraform/projects/*/terraform.tfstate*
 terraform/projects/*/.terraform
+.ansible

@@ -1,0 +1,9 @@
+services:
+  flask-app:
+    build: .
+    image: flask-app:1
+    container_name: flask-app 
+    ports:
+      - "8000:8000"
+    environment:
+      ENV: prod
